@@ -4,16 +4,16 @@ jobs:
     steps:
       - type: script
         name: Restore
-        working-directory: repository root
+        working-directory: .
         script-content: dotnet restore PaymentTransactions.sln
       - type: script
         name: Build
+        working-directory: .
         script-content: dotnet build --configuration Release
-        working-directory: repository root
       - type: script
         name: Publish
+        working-directory: .
         script-content: dotnet publish -c Release -o ./publish
-        working-directory: repository root
     runs-on:
       self-hosted:
         - requirement: exists
@@ -28,16 +28,16 @@ jobs:
     steps:
       - type: script
         name: Restore
-        working-directory: repository root
+        working-directory: .
         script-content: dotnet restore PaymentTransactions.sln
       - type: script
         name: Build
+        working-directory: .
         script-content: dotnet build --configuration Release
-        working-directory: repository root
       - type: script
         name: Publish
+        working-directory: .
         script-content: dotnet publish -c Release -o ./publish
-        working-directory: repository root
     runs-on:
       self-hosted:
         - requirement: exists
@@ -47,4 +47,3 @@ jobs:
           name: Run on MyAgent
           parameter: teamcity.agent.name
           value: MyAgent
-    dependencies: []
