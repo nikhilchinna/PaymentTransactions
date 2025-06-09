@@ -1,0 +1,28 @@
+jobs:
+  Job1:
+    name: Job 1
+    steps:
+      - type: script
+        name: Restore
+        working-directory: repository root
+        script-content: dotnet restore PaymentTransactions.sln
+      - type: script
+        name: Build
+        script-content: dotnet build --configuration Release
+        working-directory: repository root
+      - type: script
+        name: Publish
+        script-content: dotnet publish -c Release -o ./publish
+        working-directory: repository root
+    runs-on:
+      self-hosted:
+        - requirement: exists
+          name: .NET SDK Exists
+          parameter: DotNetCLI
+        - requirement: equals
+          name: Run on MyAgent
+          parameter: teamcity.agent.name
+          value: MyAgent
+  Job2:
+    name: Job 2
+    runs-on: Linux-Medium
